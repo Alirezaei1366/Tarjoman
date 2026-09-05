@@ -7,7 +7,6 @@ let recognition = null, wantListen = false, lastOpts = null;
 let restartCount = 0, lastVoiceAt = 0, noSignalNotified = false;
 let speaking = false, speakSession = 0;
 
-/* ── قفل‌گشایی AudioContext با بافر صامت (دور زدن سیاست Autoplay موبایل) ── */
 export function unlockAudio(){
   try {
     if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -20,7 +19,6 @@ export function unlockAudio(){
   } catch (e) { /* غیربحرانی */ }
 }
 
-/* ── صداها (TTS) ── */
 let voices = [], voicesCb = null;
 function refreshVoices(){
   if (!('speechSynthesis' in window)) return;
@@ -92,7 +90,6 @@ export function speak(text, lang = 'fa'){
     };
     window.speechSynthesis.speak(u);
   };
-  /* تأخیر کوتاه پس از cancel برای دور زدن باگ نژاد شناخته‌شده Chrome */
   setTimeout(next, 60);
   return true;
 }
@@ -103,7 +100,6 @@ export function stopSpeaking(){
   speaking = false; drawState();
 }
 
-/* ── بوم امواج FFT ── */
 export function setVisualizer(canvas){
   vizCanvas = canvas;
   vizCtx = canvas ? canvas.getContext('2d') : null;
@@ -124,7 +120,6 @@ function drawFrame(){
   if (analyser && wantListen){
     analyser.getByteFrequencyData(freqData);
     analyser.getByteTimeDomainData(timeData);
-    /* واچ‌داگ سطح سیگنال: اگر ۵ ثانیه صدایی نرسد، راهنمای رفع مشکل صادر شود */
     let sum = 0;
     for (let i = 0; i < timeData.length; i++){ const d = (timeData[i] - 128) / 128; sum += d * d; }
     const rms = Math.sqrt(sum / timeData.length);
@@ -168,7 +163,6 @@ function drawIdle(){
   vizCtx.fillRect(0, h / 2 - 1, w, 2);
 }
 
-/* ── شنود پیوسته ── */
 export function isListening(){ return wantListen; }
 
 export async function startListening(opts){
@@ -243,7 +237,6 @@ function startRecognizer(){
     } else if (err === 'network'){
       if (lastOpts && lastOpts.onError) lastOpts.onError({ code: 'network', message: 'سرویس شنود گفتار به شبکه دسترسی ندارد؛ اتصال اینترنت را بررسی کنید.' });
     }
-    /* no-speech و aborted توسط واچ‌داگ و راه‌اندازی خودکار مدیریت می‌شوند */
   };
   recognition.onend = () => {
     if (wantListen && restartCount < 200){
@@ -258,7 +251,6 @@ function startRecognizer(){
   try { recognition.start(); } catch (e) {}
 }
 
-/* روتین خودترمیمی: قطع ناگهانی جریان صوتی → اتصال مجدد تحلیل‌گر */
 async function recoverMic(){
   if (!wantListen) return;
   cleanupAudioGraph();

@@ -1,4 +1,22 @@
-/* ═══════════ ترجمان — Material Design 3 Tokens ═══════════ */
+/* ═══════════ ترجمان — Material Design 3 Tokens (فونت محلی دومرحله‌ای) ═══════════ */
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('../fonts/Vazirmatn-Arabic.woff2') format('woff2-variations'),
+      url('../fonts/Vazirmatn-Arabic.woff2') format('woff2');
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+  unicode-range:U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC;
+}
+@font-face{
+  font-family:'Vazirmatn';
+  src:url('../fonts/Vazirmatn-Latin.woff2') format('woff2-variations'),
+      url('../fonts/Vazirmatn-Latin.woff2') format('woff2');
+  font-weight:100 900;
+  font-style:normal;
+  font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
 :root{
   color-scheme:light;
   --font-scale:1;
@@ -21,14 +39,14 @@
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{font-size:calc(16px * var(--font-scale));scroll-behavior:smooth}
-body{margin:0;background:var(--bg);color:var(--text);font-family:'Vazirmatn',Tahoma,sans-serif;min-height:100vh}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'Vazirmatn',Tahoma,'Segoe UI',sans-serif;min-height:100vh}
 :focus-visible{outline:2px solid var(--primary);outline-offset:2px;border-radius:8px}
 .hidden{display:none!important}
 .muted{color:var(--text-2)} .small{font-size:.78rem} .spacer{flex:1}
 
-/* آیکون‌ها */
-.ms{font-family:'Material Symbols Rounded';font-weight:normal;font-style:normal;font-size:22px;line-height:1;letter-spacing:normal;text-transform:none;display:inline-block;white-space:nowrap;direction:ltr;font-variation-settings:'FILL' 0,'wght' 500,'GRAD' 0,'opsz' 24;user-select:none}
-.ms.small{font-size:18px}
+/* آیکون‌های SVG داخلی (بدون شبکه) */
+svg.ms{width:22px;height:22px;fill:currentColor;flex:none;display:inline-block;vertical-align:middle}
+svg.ms.small{width:18px;height:18px}
 
 /* هدر */
 .topbar{display:flex;align-items:center;gap:12px;padding:18px 20px 4px;max-width:680px;margin:0 auto}
@@ -107,7 +125,6 @@ button{font-family:inherit}
 .cam-view.off video{display:none}
 .cam-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#7c8a78;font-size:.85rem}
 .cam-view:not(.off) .cam-placeholder{display:none}
-.cam-placeholder .ms{font-size:44px}
 .scan-frame{position:absolute;inset:14px;pointer-events:none}
 .scan-frame i{position:absolute;width:34px;height:34px;border:3px solid #8fd684;opacity:.9}
 .scan-frame i:nth-child(1){top:0;right:0;border-left:none;border-bottom:none;border-radius:0 0 0 14px}
@@ -134,11 +151,10 @@ button{font-family:inherit}
 
 /* دراپ‌زون و فایل */
 .dropzone{border:1.5px dashed var(--outline);border-radius:20px;padding:26px 16px;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--text-2);cursor:pointer;transition:border-color .2s,background .2s;text-align:center;font-size:.85rem}
-.dropzone .ms{font-size:30px;color:var(--primary)}
+.dropzone svg.ms{color:var(--primary)}
 .dropzone:hover,.dropzone.drag{border-color:var(--primary);background:var(--primary-container);color:var(--on-primary-container)}
-.dropzone.drag .ms{color:var(--on-primary-container)}
 .fileinfo{display:flex;align-items:center;gap:12px;border:1px solid var(--outline);border-radius:16px;padding:10px 14px}
-.fileinfo .ms{color:var(--primary)}
+.fileinfo svg.ms{color:var(--primary)}
 .fileinfo b{display:block;font-size:.9rem;word-break:break-all}
 
 /* جدول زیرنویس */
@@ -180,9 +196,9 @@ button{font-family:inherit}
 /* نوار ناوبری */
 #bottom-nav{position:fixed;bottom:0;inset-inline:0;height:calc(var(--nav-h) + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:var(--surface);border-top:1px solid var(--outline);display:flex;z-index:40}
 #bottom-nav button{flex:1;background:none;border:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text-2);font:inherit;font-size:.68rem;cursor:pointer;position:relative;z-index:1;padding:0}
-#bottom-nav button .ms{transition:color .25s}
 #nav-pill{position:absolute;top:12px;left:0;height:34px;width:64px;background:var(--primary-container);border-radius:9999px;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.3,1.4,.4,1),width .3s}
-#bottom-nav button.on .ms{color:var(--on-primary-container);font-variation-settings:'FILL' 1,'wght' 600}
+#bottom-nav button.on{color:var(--on-primary-container)}
+#bottom-nav button.on .ms{color:var(--primary)}
 #bottom-nav button.on span:last-child{font-weight:800;color:var(--on-primary-container)}
 
 /* توست‌ها */

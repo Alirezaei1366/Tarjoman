@@ -39,7 +39,6 @@ function persist(k){
 export function setSetting(k, v){ state[k] = v; persist(k); emit('change', { key: k, value: v }); }
 export function setRuntime(k, v){ state[k] = v; emit('change', { key: k, value: v }); }
 
-/* ───── استخر کلیدها ───── */
 function uid(){ return (crypto.randomUUID ? crypto.randomUUID() : 'k' + Date.now() + Math.random().toString(36).slice(2)); }
 
 export function addKeys(raw){
@@ -68,7 +67,6 @@ export function patchKey(id, patch, silent = false){
   if (!silent){ persist('keys'); emit('keys'); }
 }
 
-/* انتخاب چرخشی کلید فعال + احیای خودکار کلیدهای خارج‌شده از خنک‌سازی */
 export function nextKey(){
   const now = Date.now();
   let revived = false;
@@ -93,7 +91,6 @@ export function failKey(id, err){
   patchKey(id, { status: 'invalid', error: String(err).slice(0, 60) });
 }
 
-/* ───── کش ترجمه‌ها (LRU ساده با سقف اندازه/تعداد) ───── */
 let cache = (() => {
   try { return JSON.parse(localStorage.getItem(CACHE_KEY)) || {}; } catch (e) { return {}; }
 })();

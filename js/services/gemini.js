@@ -5,7 +5,6 @@ import { sleep } from '../utils.js';
 const API_BASE = 'https://generativelanguage.googleapis.com/v1beta/models/';
 const BAD_MODEL = /embedding|aqa|imagen|veo|gemma|tts|native-audio|audio|image-generation|learnlm|robotics/i;
 
-/* اولویت‌بندی: نسخه ۳ به بالا ← ۲.۵ ← ۲ ← ۱.۵ و در هر نسخه، فلش‌های سبک‌تر */
 function rankModels(names){
   const uniq = [...new Set(names)];
   const tier = n => {
@@ -75,7 +74,6 @@ function extractErrMsg(t){
   }
 }
 
-/* هسته استریم: خودکار 429→کلید بعدی، 404→مدل بعدی، 401/403→کلید نامعتبر */
 export async function streamGenerate({ system, contents, onChunk = null, signal = null, temperature = 0.7 } = {}){
   if (!get('models').length) await refreshModels();
   const totalKeys = Math.max(1, get('keys').length);

@@ -1,12 +1,13 @@
 /* ترجمان — سرویس‌ورکر: کش پوسته آفلاین */
-const VER = 'tarjoman-v1.1.0';
+const VER = 'tarjoman-v1.3.1';
 const CORE = [
   './', './index.html', './manifest.json', './icon.svg', './css/styles.css',
   './js/app.js', './js/config.js', './js/state.js', './js/utils.js',
   './js/services/gemini.js', './js/services/audio.js', './js/services/document.js',
-  './js/workers/processor.worker.js'
+  './js/workers/processor.worker.js',
+  './fonts/Vazirmatn-Arabic.woff2', './fonts/Vazirmatn-Latin.woff2'
 ];
-const ALLOWED_HOSTS = ['fonts.googleapis.com', 'fonts.gstatic.com', 'cdnjs.cloudflare.com'];
+const ALLOWED_HOSTS = ['cdnjs.cloudflare.com', 'cdn.jsdelivr.net', 'unpkg.com', 'raw.githubusercontent.com'];
 
 self.addEventListener('install', e => {
   e.waitUntil(

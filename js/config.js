@@ -8,12 +8,12 @@ export const DEFAULTS = {
   tone: 'fluent',
   autoSend: true,
   autoSpeak: false,
-  concurrency: 3,        // سقف ترجمه هم‌زمان بندهای سند
-  cooldownMs: 60000,     // خنک‌سازی کلید پس از 429
-  chunkTokens: 1500,     // سقف توکن هر بند معنایی سند
-  subBatch: 13,          // تعداد دیالوگ در هر پرده زیرنویس (۱۲ تا ۱۵)
-  subContext: 3,         // دیالوگ‌های بافت پیشین (پنجره لغزان)
-  cpsLimit: 17           // سقف کاراکتر بر ثانیه زیرنویس
+  concurrency: 3,
+  cooldownMs: 60000,
+  chunkTokens: 1500,
+  subBatch: 13,
+  subContext: 3,
+  cpsLimit: 17
 };
 
 export const PERSIST_KEYS = ['theme','fontScale','sourceLang','targetLang','tone','keys','autoSend','autoSpeak','concurrency'];

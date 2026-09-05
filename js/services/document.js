@@ -17,7 +17,6 @@ function loadScript(src){
   });
 }
 
-/* رمزگشایی هوشمند: UTF-8 → Windows-1256 → UTF-8 غیرسخت‌گیر */
 export function decodeSmart(buffer){
   try { return new TextDecoder('utf-8', { fatal: true }).decode(buffer); } catch (e) {}
   try { return new TextDecoder('windows-1256').decode(buffer); } catch (e) {}
@@ -62,7 +61,6 @@ export async function extractFromFile(file, onStatus){
   throw new Error('فرمت «.' + ext + '» پشتیبانی نمی‌شود. از PDF، DOCX، TXT، MD یا CSV استفاده کنید.');
 }
 
-/* بازسازی خطوط و پاراگراف‌ها از آیتم‌های PDF بر اساس مختصات */
 function tcToText(tc){
   const items = tc.items || [];
   const lines = [];

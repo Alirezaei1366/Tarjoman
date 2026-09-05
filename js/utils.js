@@ -28,7 +28,6 @@ export function hashStr(s){
   return (h >>> 0).toString(36);
 }
 
-/* دانلود امن با آزادسازی قطعی بلاب */
 export function downloadFile(name, text, mime = 'text/plain;charset=utf-8'){
   const blob = new Blob([text], { type: mime });
   const url = URL.createObjectURL(blob);

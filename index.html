@@ -12,13 +12,98 @@
 <link rel="manifest" href="./manifest.json">
 <link rel="icon" href="./icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="./icon.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,0&display=block" rel="stylesheet">
+<script>
+try{
+  var t=JSON.parse(localStorage.getItem('tarjoman:theme'))||'system';
+  var dk=t==='dark'||(t==='system'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
+  document.documentElement.dataset.theme=dk?'dark':'light';
+}catch(e){}
+</script>
 <link rel="stylesheet" href="./css/styles.css">
+<style>
+#splash{position:fixed;inset:0;z-index:999;display:flex;align-items:center;justify-content:center;background:#f8faf4;color:#1b211b;transition:opacity .55s ease,visibility .55s ease}
+[data-theme="dark"] #splash{background:#111411;color:#e2e7dd}
+.splash-box{display:flex;flex-direction:column;align-items:center;animation:splashIn .7s cubic-bezier(.2,.9,.25,1) both}
+.splash-logo{width:104px;height:104px;border-radius:28px;box-shadow:0 18px 44px rgba(45,105,48,.30);animation:splashFloat 2.6s ease-in-out infinite}
+.splash-title{font-size:2.1rem;font-weight:800;margin:20px 0 4px}
+.splash-tag{color:#5a645a;font-size:.88rem;margin:0}
+.splash-dots{display:flex;gap:9px;margin-top:28px}
+.splash-dots i{width:9px;height:9px;border-radius:50%;background:#2d6930;animation:dotB 1.15s ease-in-out infinite}
+.splash-dots i:nth-child(2){animation-delay:.15s}
+.splash-dots i:nth-child(3){animation-delay:.3s}
+[data-theme="dark"] .splash-dots i{background:#8fd684}
+.splash-foot{position:absolute;bottom:calc(26px + env(safe-area-inset-bottom));left:0;right:0;text-align:center;font-size:.8rem;color:#5a645a;line-height:2.1}
+.splash-foot .ai b{color:#2d6930;font-weight:800;letter-spacing:.5px}
+.splash-foot .idea b{font-weight:700}
+[data-theme="dark"] .splash-foot .ai b{color:#8fd684}
+@keyframes splashIn{from{opacity:0;transform:translateY(16px) scale(.94)}to{opacity:1;transform:none}}
+@keyframes splashFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes dotB{0%,100%{transform:translateY(0);opacity:.4}50%{transform:translateY(-6px);opacity:1}}
+#splash.splash-out{opacity:0;visibility:hidden;pointer-events:none}
+@media (prefers-reduced-motion: reduce){.splash-logo,.splash-dots i,.splash-box{animation:none!important}}
+</style>
 </head>
 <body>
+
+<!-- ═══════ صفحه لود اولیه ═══════ -->
+<div id="splash" aria-hidden="true">
+  <div class="splash-box">
+    <img class="splash-logo" src="./icon.svg" alt="ترجمان">
+    <h1 class="splash-title">ترجمان</h1>
+    <p class="splash-tag">دستیار هوشمند ترجمه چندرسانه‌ای</p>
+    <div class="splash-dots"><i></i><i></i><i></i></div>
+  </div>
+  <div class="splash-foot">
+    <div class="ai">ساخته شده با <b>AI</b></div>
+    <div class="idea">ایده‌ی <b dir="ltr">Ali Rezaei</b></div>
+  </div>
+</div>
+<script>
+(function(){
+  var s=document.getElementById('splash');
+  if(!s) return;
+  var t0=Date.now(),done=false;
+  function hide(){
+    if(done) return; done=true;
+    var wait=Math.max(0,1600-(Date.now()-t0));
+    setTimeout(function(){
+      s.classList.add('splash-out');
+      setTimeout(function(){ if(s&&s.parentNode) s.parentNode.removeChild(s); },620);
+    },wait);
+  }
+  if(document.readyState==='complete') hide();
+  else{ window.addEventListener('load',hide); setTimeout(hide,4500); }
+})();
+</script>
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+  <symbol id="i-swap-horiz" viewBox="0 0 24 24"><path d="M6.99 11 3 15l3.99 4v-3H14v-2H6.99v3ZM21 9l-3.99-4v3H10v2h7.01V7L21 9Z"/></symbol>
+  <symbol id="i-translate" viewBox="0 0 24 24"><path d="M12.87 15.07l-2.54-2.51.03-.03A17.52 17.52 0 0 0 14.07 6H17V4h-7V2H8v2H1v2h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.73 3.17 2.98 4.56l-5.09 5.02L4 19l5-5 3.11 3.11.76-2.04zM18.5 10h-2L12 22h2l1.12-3h4.75L21 22h2l-4.5-12zm-2.62 7 1.62-4.33L19.12 17h-3.24z"/></symbol>
+  <symbol id="i-delete" viewBox="0 0 24 24"><path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/></symbol>
+  <symbol id="i-content-copy" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></symbol>
+  <symbol id="i-volume-up" viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05A4.47 4.47 0 0 0 16.5 12zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></symbol>
+  <symbol id="i-stop" viewBox="0 0 24 24"><path d="M6 6h12v12H6z"/></symbol>
+  <symbol id="i-mic" viewBox="0 0 24 24"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z"/></symbol>
+  <symbol id="i-videocam" viewBox="0 0 24 24"><path d="M17 10.5V7a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-3.5l4 4v-11l-4 4z"/></symbol>
+  <symbol id="i-videocam-off" viewBox="0 0 24 24"><path d="M21 6.5l-4 4V7a1 1 0 0 0-1-1H9.82L21 17.18V6.5zM3.27 2 2 3.27 4.73 6H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h12c.21 0 .39-.08.54-.18L19.73 21 21 19.73 3.27 2z"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM9 2 7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></symbol>
+  <symbol id="i-upload-file" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm4 18H6V4h7v5h5v11zm-2.49-3.5L12 20l-3.5-3.5 1.41-1.41L11 16.17V11h2v5.17l1.09-1.08 1.42 1.41z"/></symbol>
+  <symbol id="i-insert-drive-file" viewBox="0 0 24 24"><path d="M6 2c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6H6zm7 7V3.5L18.5 9H13z"/></symbol>
+  <symbol id="i-movie" viewBox="0 0 24 24"><path d="M18 4l2 4h-3l-2-4h-2l2 4h-3l-2-4H8l2 4H7L5 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V4h-4z"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M17.65 6.35A7.96 7.96 0 0 0 12 4c-4.42 0-7.99 3.58-8 8s3.57 8 8 8c3.73 0 6.84-2.55 7.73-6h-2.08A5.99 5.99 0 0 1 12 18c-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"/></symbol>
+  <symbol id="i-add" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></symbol>
+  <symbol id="i-graphic-eq" viewBox="0 0 24 24"><path d="M7 18h2V6H7v12zm4 4h2V2h-2v20zm-8-8h2v-4H3v4zm12 4h2V6h-2v12zm4-8v4h2v-4h-2z"/></symbol>
+  <symbol id="i-format-size" viewBox="0 0 24 24"><path d="M9 4v3h5v12h3V7h5V4H9zm-6 8h3v7h3v-7h3V9H3v3z"/></symbol>
+  <symbol id="i-text-fields" viewBox="0 0 24 24"><path d="M2.5 4v3h5v12h3V7h5V4h-13zm19 5h-9v3h3v7h3v-7h3V9z"/></symbol>
+  <symbol id="i-photo-camera" viewBox="0 0 24 24"><path d="M12 15.2a3.2 3.2 0 1 0 0-6.4 3.2 3.2 0 0 0 0 6.4zM9 2 7.17 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-3.17L15 2H9zm3 15a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></symbol>
+  <symbol id="i-description" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></symbol>
+  <symbol id="i-subtitles" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zM4 12h4v2H4v-2zm10 6H4v-2h10v2zm6 0h-4v-2h4v2zm0-4H10v-2h10v2z"/></symbol>
+  <symbol id="i-settings" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58a.49.49 0 0 0 .12-.61l-1.92-3.32a.49.49 0 0 0-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54a.48.48 0 0 0-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96a.49.49 0 0 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58a.49.49 0 0 0-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32a.49.49 0 0 0-.12-.61l-2.01-1.58zM12 15.6A3.6 3.6 0 1 1 12 8.4a3.6 3.6 0 0 1 0 7.2z"/></symbol>
+  <symbol id="i-system" viewBox="0 0 24 24"><path d="M20 3H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h6v2H8v2h8v-2h-2v-2h6a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2zm0 12H4V5h16v10z"/></symbol>
+  <symbol id="i-light-mode" viewBox="0 0 24 24"><path d="M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41L5.99 4.58zm12.37 12.37a1 1 0 0 0-1.41 1.41l1.06 1.06a1 1 0 0 0 1.41-1.41l-1.06-1.06zm1.06-10.96a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41l1.06-1.06zM7.05 18.36a1 1 0 0 0-1.41-1.41l-1.06 1.06a1 1 0 0 0 1.41 1.41l1.06-1.06z"/></symbol>
+  <symbol id="i-dark-mode" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 0 1-4.4 2.26 5.4 5.4 0 0 1-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></symbol>
+</svg>
 
 <header class="topbar">
   <img src="./icon.svg" alt="ترجمان" width="42" height="42">
@@ -35,23 +120,23 @@
     <div class="card">
       <div class="row langs">
         <select id="sel-source" class="select" aria-label="زبان مبدأ"></select>
-        <button class="icon-btn" id="btn-swap" title="جابه‌جایی زبان‌ها و متن"><span class="ms">swap_horiz</span></button>
+        <button class="icon-btn" id="btn-swap" title="جابه‌جایی زبان‌ها و متن"><svg class="ms"><use href="#i-swap-horiz"/></svg></button>
         <select id="sel-target" class="select" aria-label="زبان مقصد"></select>
       </div>
       <div class="row editor">
         <textarea id="src-input" dir="auto" placeholder="متن را بنویسید، بچسبانید یا با میکروفن بگویید… (Ctrl+Enter = ترجمه)" spellcheck="false"></textarea>
-        <div id="ghost-wrap" class="hidden"><span class="ms small">graphic_eq</span><span id="ghost-line"></span></div>
+        <div id="ghost-wrap" class="hidden"><svg class="ms small"><use href="#i-graphic-eq"/></svg><span id="ghost-line"></span></div>
         <div class="editor-divider"></div>
         <div id="out-text" dir="auto" class="out"><span class="placeholder">ترجمه اینجا ظاهر می‌شود…</span></div>
       </div>
       <div class="row toolbar">
         <span id="char-count" class="muted small">۰ نویسه</span>
         <span class="spacer"></span>
-        <button class="icon-btn" id="btn-clear" title="پاک‌سازی"><span class="ms">delete</span></button>
-        <button class="icon-btn" id="btn-copy" title="کپی ترجمه"><span class="ms">content_copy</span></button>
-        <button class="icon-btn" id="btn-speak" title="پخش/توقف صدا"><span class="ms">volume_up</span></button>
-        <button class="btn-primary" id="btn-translate"><span class="ms">translate</span>ترجمه</button>
-        <button class="btn-danger hidden" id="btn-stop-text"><span class="ms">stop</span>توقف</button>
+        <button class="icon-btn" id="btn-clear" title="پاک‌سازی"><svg class="ms"><use href="#i-delete"/></svg></button>
+        <button class="icon-btn" id="btn-copy" title="کپی ترجمه"><svg class="ms"><use href="#i-content-copy"/></svg></button>
+        <button class="icon-btn" id="btn-speak" title="پخش/توقف صدا"><svg class="ms"><use href="#i-volume-up"/></svg></button>
+        <button class="btn-primary" id="btn-translate"><svg class="ms"><use href="#i-translate"/></svg>ترجمه</button>
+        <button class="btn-danger hidden" id="btn-stop-text"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
       </div>
     </div>
     <div class="card">
@@ -74,12 +159,12 @@
       <div class="row col">
         <div class="cam-view off" id="cam-view">
           <video id="cam-video" playsinline muted></video>
-          <div class="cam-placeholder"><span class="ms">photo_camera</span><p>دوربین خاموش است</p></div>
+          <div class="cam-placeholder"><svg class="ms" style="width:44px;height:44px"><use href="#i-photo-camera"/></svg><p>دوربین خاموش است</p></div>
           <div class="scan-frame"><i></i><i></i><i></i><i></i><b class="scanline"></b></div>
         </div>
         <div class="btn-row">
-          <button class="btn-secondary" id="btn-cam"><span class="ms">videocam</span>روشن کردن دوربین</button>
-          <button class="btn-primary" id="btn-shot" disabled><span class="ms">camera</span>ثبت و ترجمه</button>
+          <button class="btn-secondary" id="btn-cam"><svg class="ms"><use href="#i-videocam"/></svg>روشن کردن دوربین</button>
+          <button class="btn-primary" id="btn-shot" disabled><svg class="ms"><use href="#i-camera"/></svg>ثبت و ترجمه</button>
         </div>
         <canvas id="cam-canvas" class="hidden"></canvas>
       </div>
@@ -87,10 +172,10 @@
     <div class="card">
       <div class="row col">
         <label class="row-label">آپلود تصویر</label>
-        <div class="dropzone" id="drop-cam"><span class="ms">upload_file</span><p>فایل JPG / PNG / WebP را اینجا رها کنید، بزنید، یا با Ctrl+V بچسبانید</p></div>
+        <div class="dropzone" id="drop-cam"><svg class="ms" style="width:30px;height:30px"><use href="#i-upload-file"/></svg><p>فایل JPG / PNG / WebP را اینجا رها کنید، بزنید، یا با Ctrl+V بچسبانید</p></div>
         <input type="file" id="file-cam" accept=".jpg,.jpeg,.png,.webp,image/*" class="hidden">
         <img id="img-preview" class="hidden" alt="پیش‌نمایش تصویر">
-        <div class="btn-row end"><button class="btn-secondary hidden" id="btn-img-clear"><span class="ms">delete</span>حذف تصویر</button></div>
+        <div class="btn-row end"><button class="btn-secondary hidden" id="btn-img-clear"><svg class="ms"><use href="#i-delete"/></svg>حذف تصویر</button></div>
       </div>
     </div>
     <div class="card">
@@ -100,8 +185,8 @@
         <div class="out-box"><span class="box-title">متن شناسایی‌شده</span><div id="ocr-raw" dir="auto" class="out small-out">—</div></div>
         <div class="out-box accent"><span class="box-title">ترجمه</span><div id="ocr-out" dir="auto" class="out small-out">—</div></div>
         <div class="btn-row end">
-          <button class="btn-secondary hidden" id="btn-ocr-copy"><span class="ms">content_copy</span>کپی ترجمه</button>
-          <button class="btn-danger hidden" id="btn-stop-cam"><span class="ms">stop</span>توقف</button>
+          <button class="btn-secondary hidden" id="btn-ocr-copy"><svg class="ms"><use href="#i-content-copy"/></svg>کپی ترجمه</button>
+          <button class="btn-danger hidden" id="btn-stop-cam"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
         </div>
       </div>
     </div>
@@ -112,9 +197,9 @@
     <div class="card">
       <div class="row col">
         <label class="row-label">اسناد متنی، PDF و Word</label>
-        <div class="dropzone" id="drop-doc"><span class="ms">description</span><p>.pdf .docx .txt .md .csv را رها کنید یا انتخاب کنید</p></div>
+        <div class="dropzone" id="drop-doc"><svg class="ms" style="width:30px;height:30px"><use href="#i-description"/></svg><p>.pdf .docx .txt .md .csv را رها کنید یا انتخاب کنید</p></div>
         <input type="file" id="file-doc" accept=".pdf,.docx,.txt,.md,.csv" class="hidden">
-        <div id="doc-info" class="fileinfo hidden"><span class="ms">insert_drive_file</span><div><b id="doc-name"></b><span id="doc-meta" class="muted small"></span></div></div>
+        <div id="doc-info" class="fileinfo hidden"><svg class="ms"><use href="#i-insert-drive-file"/></svg><div><b id="doc-name"></b><span id="doc-meta" class="muted small"></span></div></div>
         <p id="doc-status" class="muted small"></p>
         <div id="doc-preview" dir="auto" class="out small-out dim hidden"></div>
       </div>
@@ -124,10 +209,10 @@
         <div class="pbar"><div id="pbar-doc-fill"></div></div>
         <p id="pbar-doc-label" class="muted small">آماده پردازش</p>
         <div class="btn-row">
-          <button class="btn-primary" id="btn-doc-translate" disabled><span class="ms">translate</span>ترجمه سند</button>
-          <button class="btn-danger hidden" id="btn-doc-cancel"><span class="ms">stop</span>توقف</button>
-          <button class="btn-secondary" id="btn-doc-copy" disabled><span class="ms">content_copy</span>کپی</button>
-          <button class="btn-secondary" id="btn-doc-download" disabled><span class="ms">download</span>دانلود</button>
+          <button class="btn-primary" id="btn-doc-translate" disabled><svg class="ms"><use href="#i-translate"/></svg>ترجمه سند</button>
+          <button class="btn-danger hidden" id="btn-doc-cancel"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
+          <button class="btn-secondary" id="btn-doc-copy" disabled><svg class="ms"><use href="#i-content-copy"/></svg>کپی</button>
+          <button class="btn-secondary" id="btn-doc-download" disabled><svg class="ms"><use href="#i-download"/></svg>دانلود</button>
         </div>
         <div id="doc-out" dir="auto" class="out small-out hidden"></div>
       </div>
@@ -139,9 +224,9 @@
     <div class="card">
       <div class="row col">
         <label class="row-label">زیرنویس سینمایی</label>
-        <div class="dropzone" id="drop-sub"><span class="ms">subtitles</span><p>.srt .vtt .ass .ssa .sub را رها کنید یا انتخاب کنید</p></div>
+        <div class="dropzone" id="drop-sub"><svg class="ms" style="width:30px;height:30px"><use href="#i-subtitles"/></svg><p>.srt .vtt .ass .ssa .sub را رها کنید یا انتخاب کنید</p></div>
         <input type="file" id="file-sub" accept=".srt,.vtt,.ass,.ssa,.sub" class="hidden">
-        <div id="sub-info" class="fileinfo hidden"><span class="ms">movie</span><div><b id="sub-name"></b><span id="sub-meta" class="muted small"></span></div></div>
+        <div id="sub-info" class="fileinfo hidden"><svg class="ms"><use href="#i-movie"/></svg><div><b id="sub-name"></b><span id="sub-meta" class="muted small"></span></div></div>
         <p id="sub-status" class="muted small"></p>
       </div>
     </div>
@@ -150,10 +235,10 @@
         <div class="pbar"><div id="pbar-sub-fill"></div></div>
         <p id="pbar-sub-label" class="muted small">آماده</p>
         <div class="btn-row">
-          <button class="btn-primary" id="btn-sub-translate" disabled><span class="ms">translate</span>ترجمه دیالوگ‌ها</button>
-          <button class="btn-danger hidden" id="btn-sub-cancel"><span class="ms">stop</span>توقف</button>
-          <button class="btn-secondary hidden" id="btn-sub-retry"><span class="ms">refresh</span>ترجمه موارد ناقص</button>
-          <button class="btn-secondary" id="btn-sub-download" disabled><span class="ms">download</span>دانلود SRT</button>
+          <button class="btn-primary" id="btn-sub-translate" disabled><svg class="ms"><use href="#i-translate"/></svg>ترجمه دیالوگ‌ها</button>
+          <button class="btn-danger hidden" id="btn-sub-cancel"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
+          <button class="btn-secondary hidden" id="btn-sub-retry"><svg class="ms"><use href="#i-refresh"/></svg>ترجمه موارد ناقص</button>
+          <button class="btn-secondary" id="btn-sub-download" disabled><svg class="ms"><use href="#i-download"/></svg>دانلود SRT</button>
         </div>
       </div>
     </div>
@@ -177,12 +262,12 @@
         <label class="row-label">استخر کلیدهای Gemini API</label>
         <textarea id="keys-input" rows="3" dir="ltr" placeholder="کلیدها را هر کدام در یک خط وارد کنید (AIza…)"></textarea>
         <div class="btn-row">
-          <button class="btn-secondary" id="btn-keys-add"><span class="ms">add</span>افزودن به استخر</button>
+          <button class="btn-secondary" id="btn-keys-add"><svg class="ms"><use href="#i-add"/></svg>افزودن به استخر</button>
           <span id="key-stats" class="muted small">هیچ کلیدی ثبت نشده</span>
         </div>
         <div id="key-list" class="key-list"></div>
         <div class="btn-row">
-          <button class="btn-secondary" id="btn-models-refresh"><span class="ms">refresh</span>استعلام زنده مدل‌ها</button>
+          <button class="btn-secondary" id="btn-models-refresh"><svg class="ms"><use href="#i-refresh"/></svg>استعلام زنده مدل‌ها</button>
           <span class="chip" id="model-name">—</span>
         </div>
         <p class="hint">کلیدها فقط در حافظه محلی مرورگر خودتان ذخیره می‌شوند. کلید رایگان را از Google AI Studio بگیرید.</p>
@@ -192,12 +277,12 @@
       <div class="row col">
         <label class="row-label">نمایش و تم</label>
         <div class="seg" id="seg-theme">
-          <button data-theme-choice="system" class="on"><span class="ms small">brightness_auto</span>سیستم</button>
-          <button data-theme-choice="light"><span class="ms small">light_mode</span>روشن</button>
-          <button data-theme-choice="dark"><span class="ms small">dark_mode</span>تاریک</button>
+          <button data-theme-choice="system" class="on"><svg class="ms small"><use href="#i-system"/></svg>سیستم</button>
+          <button data-theme-choice="light"><svg class="ms small"><use href="#i-light-mode"/></svg>روشن</button>
+          <button data-theme-choice="dark"><svg class="ms small"><use href="#i-dark-mode"/></svg>تاریک</button>
         </div>
         <div class="slider-row">
-          <span class="ms">format_size</span>
+          <svg class="ms"><use href="#i-format-size"/></svg>
           <input type="range" id="font-range" min="85" max="130" step="5" value="100" aria-label="مقیاس فونت">
           <b id="font-val">۱۰۰٪</b>
         </div>
@@ -208,12 +293,12 @@
           <button data-conc="5">سریع (۵)</button>
         </div>
         <label class="tile as-label">
-          <span class="ibox"><span class="ms">graphic_eq</span></span>
+          <span class="ibox"><svg class="ms"><use href="#i-graphic-eq"/></svg></span>
           <span class="tt"><b>ارسال خودکار پس از گفتار</b><span>با پایان جمله، ترجمه خودکار آغاز شود</span></span>
           <span class="switch"><input type="checkbox" id="sw-autosend" checked><span class="track"></span><span class="thumb"></span></span>
         </label>
         <label class="tile as-label">
-          <span class="ibox"><span class="ms">volume_up</span></span>
+          <span class="ibox"><svg class="ms"><use href="#i-volume-up"/></svg></span>
           <span class="tt"><b>پخش خودکار صدای ترجمه</b><span>پس از هر ترجمه، نتیجه خوانده شود</span></span>
           <span class="switch"><input type="checkbox" id="sw-autospeak"><span class="track"></span><span class="thumb"></span></span>
         </label>
@@ -223,17 +308,17 @@
       <div class="row col">
         <label class="row-label">داده‌ها و عیب‌یابی صوتی</label>
         <button class="tile" id="btn-clear-cache">
-          <span class="ibox"><span class="ms">cleaning_services</span></span>
+          <span class="ibox"><svg class="ms"><use href="#i-delete"/></svg></span>
           <span class="tt"><b>پاک‌سازی کش ترجمه‌ها</b><span id="cache-size">—</span></span>
           <span class="chev">‹</span>
         </button>
         <button class="tile" id="btn-tts-test">
-          <span class="ibox"><span class="ms">speaker</span></span>
+          <span class="ibox"><svg class="ms"><use href="#i-volume-up"/></svg></span>
           <span class="tt"><b>آزمایش بلندگو (TTS)</b><span id="tts-info">بررسی بسته‌های صوتی دستگاه</span></span>
           <span class="chev">‹</span>
         </button>
         <button class="tile" id="btn-mic-test">
-          <span class="ibox"><span class="ms">mic</span></span>
+          <span class="ibox"><svg class="ms"><use href="#i-mic"/></svg></span>
           <span class="tt"><b>آزمایش میکروفن</b><span>سنجش ۴ ثانیه‌ای سطح سیگنال ورودی</span></span>
           <span class="chev">‹</span>
         </button>
@@ -241,8 +326,8 @@
     </div>
     <div class="card">
       <div class="row col about">
-        <b>ترجمان (Tarjoman) — نسخه ۱.۱.۰</b>
-        <p class="muted small">وب‌اپلیکیشن ترجمه چندرسانه‌ای، کاملاً کلاینت‌محور با موتور Gemini. هیچ سروری در میانه نیست؛ کلیدها و داده‌های شما فقط در مرورگر خودتان می‌مانند.</p>
+        <b>ترجمان (Tarjoman) — نسخه ۱.۳.۱</b>
+        <p class="muted small">وب‌اپلیکیشن ترجمه چندرسانه‌ای، کاملاً کلاینت‌محور با موتور Gemini. ساخته شده با AI — ایده‌ی Ali Rezaei.</p>
       </div>
     </div>
   </section>
@@ -253,17 +338,17 @@
 <div id="audio-island" role="status">
   <canvas id="island-canvas" width="220" height="52"></canvas>
   <span id="island-status">میکروفن آماده</span>
-  <button id="island-mic" title="شنود پیوسته"><span class="ms">mic</span></button>
+  <button id="island-mic" title="شنود پیوسته"><svg class="ms"><use href="#i-mic"/></svg></button>
 </div>
 
 <!-- نوار ناوبری -->
 <nav id="bottom-nav">
   <span id="nav-pill"></span>
-  <button data-tab="panel-text" class="on"><span class="ms">text_fields</span><span>متن</span></button>
-  <button data-tab="panel-camera"><span class="ms">photo_camera</span><span>دوربین</span></button>
-  <button data-tab="panel-docs"><span class="ms">description</span><span>اسناد</span></button>
-  <button data-tab="panel-subs"><span class="ms">subtitles</span><span>زیرنویس</span></button>
-  <button data-tab="panel-settings"><span class="ms">settings</span><span>تنظیمات</span></button>
+  <button data-tab="panel-text" class="on"><svg class="ms"><use href="#i-text-fields"/></svg><span>متن</span></button>
+  <button data-tab="panel-camera"><svg class="ms"><use href="#i-photo-camera"/></svg><span>دوربین</span></button>
+  <button data-tab="panel-docs"><svg class="ms"><use href="#i-description"/></svg><span>اسناد</span></button>
+  <button data-tab="panel-subs"><svg class="ms"><use href="#i-subtitles"/></svg><span>زیرنویس</span></button>
+  <button data-tab="panel-settings"><svg class="ms"><use href="#i-settings"/></svg><span>تنظیمات</span></button>
 </nav>
 
 <div id="toasts" aria-live="polite"></div>

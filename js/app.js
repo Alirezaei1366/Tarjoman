@@ -8,8 +8,8 @@ import * as docs from './services/document.js';
 
 const $  = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+const icon = name => '<svg class="ms"><use href="#i-' + name + '"/></svg>';
 
-/* ───── کلاینت ورکر پردازش ───── */
 const worker = new Worker('./js/workers/processor.worker.js');
 let wSeq = 0;
 const wPending = new Map();
@@ -35,7 +35,6 @@ function callWorker(type, payload = {}){
   });
 }
 
-/* ───── توست و شیت تأیید ───── */
 function toast(msg, type = 'info'){
   const box = document.createElement('div');
   box.className = 'toast ' + type;
@@ -63,7 +62,6 @@ function closeSheet(v){
   if (sheetResolve){ sheetResolve(v); sheetResolve = null; }
 }
 
-/* ───── تم و فونت ───── */
 function applyTheme(){
   const pref = state.get('theme');
   const dark = pref === 'dark' || (pref === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
@@ -82,7 +80,6 @@ function applyFont(){
   $('#font-val').textContent = toFa(Math.round(v * 100)) + '٪';
 }
 
-/* ───── ناوبری ───── */
 let activeTab = 'panel-text';
 function switchTab(id){
   if (id !== activeTab && activeTab === 'panel-camera') stopCamera();
@@ -95,17 +92,16 @@ function switchTab(id){
 }
 function movePill(){
   const btn = $('#bottom-nav button[data-tab="' + activeTab + '"]');
-  const icon = btn && btn.querySelector('.ms');
+  const iconEl = btn && btn.querySelector('.ms');
   const pill = $('#nav-pill');
-  if (!btn || !icon) return;
+  if (!btn || !iconEl) return;
   const nb = $('#bottom-nav').getBoundingClientRect();
-  const ib = icon.getBoundingClientRect();
+  const ib = iconEl.getBoundingClientRect();
   pill.style.width = (ib.width + 30) + 'px';
   pill.style.transform = 'translateX(' + (ib.left - nb.left - 15) + 'px)';
   pill.style.opacity = '1';
 }
 
-/* ───── آماده‌سازی کلید/مدل ───── */
 async function ensureReady(){
   if (!state.get('keys').length){
     toast('ابتدا از تب تنظیمات حداقل یک کلید Gemini API اضافه کنید.', 'warn');
@@ -248,7 +244,6 @@ function bindText(){
     t.value = oldS === 'auto' ? 'fa' : oldS;
     state.setSetting('sourceLang', s.value);
     state.setSetting('targetLang', t.value);
-    /* اگر زبان مبدأ مشخص بود، متن ورودی و خروجی هم جابه‌جا می‌شوند */
     if (oldS !== 'auto'){
       const outTxt = out.querySelector('.placeholder') ? '' : out.textContent.trim();
       if (outTxt){
@@ -301,7 +296,7 @@ async function startCamera(){
     v.srcObject = camStream;
     await v.play().catch(() => {});
     $('#cam-view').classList.remove('off');
-    $('#btn-cam').innerHTML = '<span class="ms">videocam_off</span>خاموش کردن دوربین';
+    $('#btn-cam').innerHTML = icon('videocam-off') + 'خاموش کردن دوربین';
     $('#btn-shot').disabled = false;
   } catch (e) {
     camStream = null;
@@ -317,11 +312,10 @@ function stopCamera(){
   const v = $('#cam-video');
   if (v) v.srcObject = null;
   $('#cam-view').classList.add('off');
-  $('#btn-cam').innerHTML = '<span class="ms">videocam</span>روشن کردن دوربین';
+  $('#btn-cam').innerHTML = icon('videocam') + 'روشن کردن دوربین';
   $('#btn-shot').disabled = true;
 }
 
-/* فشرده‌سازی تصویر با پس‌زمینه سفید (جلوگیری از سیاه‌شدن PNG شفاف) */
 function compressToBase64(blob, maxW, q){
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(blob);
@@ -433,7 +427,6 @@ function bindCamera(){
     if (!camStream || camBusy) return;
     const v = $('#cam-video');
     if (!v.videoWidth || v.readyState < 2){ toast('تصویر دوربین هنوز آماده نیست', 'warn'); return; }
-    /* فلاش شاتر */
     const view = $('#cam-view');
     view.classList.remove('flash');
     void view.offsetWidth;
@@ -462,13 +455,11 @@ function bindCamera(){
     showPreview(f);
     processImage(f);
   });
-  /* آزادسازی دوربین هنگام مخفی‌شدن صفحه (بهینه‌سازی منابع) */
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && camStream) stopCamera();
   });
 }
 
-/* چسباندن مستقیم تصویر از کلیپ‌بورد → پرش خودکار به تب دوربین */
 function bindPaste(){
   document.addEventListener('paste', e => {
     const items = e.clipboardData && e.clipboardData.items;
@@ -659,7 +650,6 @@ async function pickSub(f){
   }
 }
 
-/* جدول فقط یک‌بار ساخته می‌شود؛ ترجمه‌ها درجا در سلول‌ها آپدیت می‌شوند */
 function buildSubRows(){
   const box = $('#sub-rows');
   box.innerHTML = '';
@@ -862,7 +852,7 @@ function renderKeys(){
     const del = document.createElement('button');
     del.className = 'icon-btn';
     del.title = 'حذف کلید';
-    del.innerHTML = '<span class="ms">delete</span>';
+    del.innerHTML = icon('delete');
     del.onclick = async () => {
       if (await confirmDialog('حذف کلید', 'کلید ' + maskKey(k.key) + ' از استخر حذف شود؟', 'حذف')){
         state.removeKey(k.id);
@@ -981,7 +971,6 @@ function bindSettings(){
   }, 1000);
 }
 
-/* ───── رویدادهای سراسری وضعیت ───── */
 state.on('keys', renderKeys);
 state.on('models', renderModel);
 state.on('change', ({ key }) => {
@@ -990,7 +979,6 @@ state.on('change', ({ key }) => {
   if (key === 'models') renderModel();
 });
 
-/* ───── راه‌اندازی ───── */
 function boot(){
   applyTheme();
   applyFont();
@@ -1008,12 +996,10 @@ function boot(){
     b.onclick = () => { haptic(12); switchTab(b.dataset.tab); };
   });
 
-  /* هپتیک سراسری روی هر کلیک/تعویض تب/سوییچ */
   document.addEventListener('click', e => {
     if (e.target.closest('button,.seg,[role="button"],label.as-label')) haptic(12);
   }, true);
 
-  /* قفل‌گشایی AudioContext با نخستین تعامل کاربر */
   document.addEventListener('pointerdown', () => audio.unlockAudio(), { once: true, capture: true });
 
   $('#sheet-cancel').onclick = () => closeSheet(false);
@@ -1021,7 +1007,6 @@ function boot(){
   $('#sheet').addEventListener('click', e => { if (e.target.id === 'sheet') closeSheet(false); });
 
   window.addEventListener('resize', movePill);
-  if (document.fonts && document.fonts.ready) document.fonts.ready.then(movePill);
   requestAnimationFrame(movePill);
 
   if ('serviceWorker' in navigator){

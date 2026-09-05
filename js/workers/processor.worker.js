@@ -21,7 +21,6 @@ function route(type, p){
   }
 }
 
-/* ───── زمان ───── */
 function toMs(h, m, s, ms){
   return ((+h) * 3600 + (+m) * 60 + (+s)) * 1000 + parseInt(String(ms).padEnd(3, '0').slice(0, 3), 10);
 }
@@ -39,7 +38,6 @@ function assTime(s){
   return ((+m[1]) * 3600 + (+m[2]) * 60 + (+m[3])) * 1000 + (+m[4]) * 10;
 }
 
-/* ───── پارس فرمت‌ها ───── */
 const TIME_RE = /(\d{1,2}):(\d{2}):(\d{2})[,.](\d{1,3})\s*-->\s*(\d{1,2}):(\d{2}):(\d{2})[,.](\d{1,3})/;
 
 function parseSubtitles(text, fileName){
@@ -126,7 +124,6 @@ function parseMicro(src){
   return cues;
 }
 
-/* ───── ماسک‌گذاری تگ‌ها با نشانگرهای غیرقابل دستکاری ───── */
 const RE_ASS_TAG = /\{[^}]*\}/g;
 const RE_HTML_TAG = /<\/?[a-zA-Z][^>]*>/g;
 const RE_ASS_BR = /\\[Nn]/g;
@@ -159,7 +156,6 @@ function restoreTags(texts, tagsList){
   });
 }
 
-/* ───── پرده‌بندی زیرنویس با پنجره لغزان ───── */
 function buildBatches(cues, size, context){
   const batches = [];
   for (let s = 0; s < cues.length; s += size){
@@ -176,7 +172,6 @@ function buildBatches(cues, size, context){
   return batches;
 }
 
-/* ───── قطعه‌بندی معنایی اسناد ───── */
 function chunkText(text, maxTokens){
   const words = s => (String(s).trim().match(/\S+/g) || []).length;
   const paras = String(text || '').replace(/\r/g, '').split(/\n{2,}/);
@@ -208,7 +203,6 @@ function chunkText(text, maxTokens){
   return chunks;
 }
 
-/* ───── ساخت SRT نهایی ───── */
 function buildSrt(cues){
   return cues.map((c, i) =>
     (i + 1) + '\n' + msToSrt(c.start) + ' --> ' + msToSrt(c.end) + '\n' +
