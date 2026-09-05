@@ -1,4 +1,3 @@
-/* ═══════════ ترجمان — لایه صوتی: قفل‌گشایی، شنود پیوسته، واچ‌داگ، بوم FFT، TTS ═══════════ */
 import { emit } from '../state.js';
 
 let audioCtx = null, micStream = null, analyser = null, freqData = null, timeData = null;
@@ -16,7 +15,7 @@ export function unlockAudio(){
     src.buffer = buf;
     src.connect(audioCtx.destination);
     src.start(0);
-  } catch (e) { /* غیربحرانی */ }
+  } catch (e) {}
 }
 
 let voices = [], voicesCb = null;

@@ -1,5 +1,4 @@
-/* ترجمان — سرویس‌ورکر: کش پوسته آفلاین */
-const VER = 'tarjoman-v1.3.1';
+const VER = 'tarjoman-v1.4.0';
 const CORE = [
   './', './index.html', './manifest.json', './icon.svg', './css/styles.css',
   './js/app.js', './js/config.js', './js/state.js', './js/utils.js',

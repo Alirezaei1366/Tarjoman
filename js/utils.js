@@ -1,5 +1,3 @@
-/* ═══════════ ترجمان — ابزارهای کمکی مشترک ═══════════ */
-
 export function haptic(ms = 12){
   try { if (navigator.vibrate) navigator.vibrate(ms); } catch (e) {}
 }

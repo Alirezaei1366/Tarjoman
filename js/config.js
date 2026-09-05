@@ -1,5 +1,3 @@
-/* ═══════════ ترجمان — پیکربندی مرکزی ═══════════ */
-
 export const DEFAULTS = {
   theme: 'system',
   fontScale: 1,

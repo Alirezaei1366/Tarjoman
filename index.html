@@ -120,23 +120,23 @@ try{
     <div class="card">
       <div class="row langs">
         <select id="sel-source" class="select" aria-label="زبان مبدأ"></select>
-        <button class="icon-btn" id="btn-swap" title="جابه‌جایی زبان‌ها و متن"><svg class="ms"><use href="#i-swap-horiz"/></svg></button>
+        <button class="icon-btn" id="btn-swap" title="جابه‌جایی زبان‌ها و متن"><svg class="ms" width="22" height="22"><use href="#i-swap-horiz"/></svg></button>
         <select id="sel-target" class="select" aria-label="زبان مقصد"></select>
       </div>
       <div class="row editor">
         <textarea id="src-input" dir="auto" placeholder="متن را بنویسید، بچسبانید یا با میکروفن بگویید… (Ctrl+Enter = ترجمه)" spellcheck="false"></textarea>
-        <div id="ghost-wrap" class="hidden"><svg class="ms small"><use href="#i-graphic-eq"/></svg><span id="ghost-line"></span></div>
+        <div id="ghost-wrap" class="hidden"><svg class="ms" width="18" height="18"><use href="#i-graphic-eq"/></svg><span id="ghost-line"></span></div>
         <div class="editor-divider"></div>
         <div id="out-text" dir="auto" class="out"><span class="placeholder">ترجمه اینجا ظاهر می‌شود…</span></div>
       </div>
       <div class="row toolbar">
         <span id="char-count" class="muted small">۰ نویسه</span>
         <span class="spacer"></span>
-        <button class="icon-btn" id="btn-clear" title="پاک‌سازی"><svg class="ms"><use href="#i-delete"/></svg></button>
-        <button class="icon-btn" id="btn-copy" title="کپی ترجمه"><svg class="ms"><use href="#i-content-copy"/></svg></button>
-        <button class="icon-btn" id="btn-speak" title="پخش/توقف صدا"><svg class="ms"><use href="#i-volume-up"/></svg></button>
-        <button class="btn-primary" id="btn-translate"><svg class="ms"><use href="#i-translate"/></svg>ترجمه</button>
-        <button class="btn-danger hidden" id="btn-stop-text"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
+        <button class="icon-btn" id="btn-clear" title="پاک‌سازی"><svg class="ms" width="22" height="22"><use href="#i-delete"/></svg></button>
+        <button class="icon-btn" id="btn-copy" title="کپی ترجمه"><svg class="ms" width="22" height="22"><use href="#i-content-copy"/></svg></button>
+        <button class="icon-btn" id="btn-speak" title="پخش/توقف صدا"><svg class="ms" width="22" height="22"><use href="#i-volume-up"/></svg></button>
+        <button class="btn-primary" id="btn-translate"><svg class="ms" width="22" height="22"><use href="#i-translate"/></svg>ترجمه</button>
+        <button class="btn-danger hidden" id="btn-stop-text"><svg class="ms" width="22" height="22"><use href="#i-stop"/></svg>توقف</button>
       </div>
     </div>
     <div class="card">
@@ -159,12 +159,12 @@ try{
       <div class="row col">
         <div class="cam-view off" id="cam-view">
           <video id="cam-video" playsinline muted></video>
-          <div class="cam-placeholder"><svg class="ms" style="width:44px;height:44px"><use href="#i-photo-camera"/></svg><p>دوربین خاموش است</p></div>
+          <div class="cam-placeholder"><svg class="ms" width="44" height="44"><use href="#i-photo-camera"/></svg><p>دوربین خاموش است</p></div>
           <div class="scan-frame"><i></i><i></i><i></i><i></i><b class="scanline"></b></div>
         </div>
         <div class="btn-row">
-          <button class="btn-secondary" id="btn-cam"><svg class="ms"><use href="#i-videocam"/></svg>روشن کردن دوربین</button>
-          <button class="btn-primary" id="btn-shot" disabled><svg class="ms"><use href="#i-camera"/></svg>ثبت و ترجمه</button>
+          <button class="btn-secondary" id="btn-cam"><svg class="ms" width="22" height="22"><use href="#i-videocam"/></svg>روشن کردن دوربین</button>
+          <button class="btn-primary" id="btn-shot" disabled><svg class="ms" width="22" height="22"><use href="#i-camera"/></svg>ثبت و ترجمه</button>
         </div>
         <canvas id="cam-canvas" class="hidden"></canvas>
       </div>
@@ -172,10 +172,10 @@ try{
     <div class="card">
       <div class="row col">
         <label class="row-label">آپلود تصویر</label>
-        <div class="dropzone" id="drop-cam"><svg class="ms" style="width:30px;height:30px"><use href="#i-upload-file"/></svg><p>فایل JPG / PNG / WebP را اینجا رها کنید، بزنید، یا با Ctrl+V بچسبانید</p></div>
+        <div class="dropzone" id="drop-cam"><svg class="ms" width="30" height="30"><use href="#i-upload-file"/></svg><p>فایل JPG / PNG / WebP را اینجا رها کنید، بزنید، یا با Ctrl+V بچسبانید</p></div>
         <input type="file" id="file-cam" accept=".jpg,.jpeg,.png,.webp,image/*" class="hidden">
         <img id="img-preview" class="hidden" alt="پیش‌نمایش تصویر">
-        <div class="btn-row end"><button class="btn-secondary hidden" id="btn-img-clear"><svg class="ms"><use href="#i-delete"/></svg>حذف تصویر</button></div>
+        <div class="btn-row end"><button class="btn-secondary hidden" id="btn-img-clear"><svg class="ms" width="22" height="22"><use href="#i-delete"/></svg>حذف تصویر</button></div>
       </div>
     </div>
     <div class="card">
@@ -185,8 +185,8 @@ try{
         <div class="out-box"><span class="box-title">متن شناسایی‌شده</span><div id="ocr-raw" dir="auto" class="out small-out">—</div></div>
         <div class="out-box accent"><span class="box-title">ترجمه</span><div id="ocr-out" dir="auto" class="out small-out">—</div></div>
         <div class="btn-row end">
-          <button class="btn-secondary hidden" id="btn-ocr-copy"><svg class="ms"><use href="#i-content-copy"/></svg>کپی ترجمه</button>
-          <button class="btn-danger hidden" id="btn-stop-cam"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
+          <button class="btn-secondary hidden" id="btn-ocr-copy"><svg class="ms" width="22" height="22"><use href="#i-content-copy"/></svg>کپی ترجمه</button>
+          <button class="btn-danger hidden" id="btn-stop-cam"><svg class="ms" width="22" height="22"><use href="#i-stop"/></svg>توقف</button>
         </div>
       </div>
     </div>
@@ -197,9 +197,9 @@ try{
     <div class="card">
       <div class="row col">
         <label class="row-label">اسناد متنی، PDF و Word</label>
-        <div class="dropzone" id="drop-doc"><svg class="ms" style="width:30px;height:30px"><use href="#i-description"/></svg><p>.pdf .docx .txt .md .csv را رها کنید یا انتخاب کنید</p></div>
+        <div class="dropzone" id="drop-doc"><svg class="ms" width="30" height="30"><use href="#i-description"/></svg><p>.pdf .docx .txt .md .csv را رها کنید یا انتخاب کنید</p></div>
         <input type="file" id="file-doc" accept=".pdf,.docx,.txt,.md,.csv" class="hidden">
-        <div id="doc-info" class="fileinfo hidden"><svg class="ms"><use href="#i-insert-drive-file"/></svg><div><b id="doc-name"></b><span id="doc-meta" class="muted small"></span></div></div>
+        <div id="doc-info" class="fileinfo hidden"><svg class="ms" width="22" height="22"><use href="#i-insert-drive-file"/></svg><div><b id="doc-name"></b><span id="doc-meta" class="muted small"></span></div></div>
         <p id="doc-status" class="muted small"></p>
         <div id="doc-preview" dir="auto" class="out small-out dim hidden"></div>
       </div>
@@ -209,10 +209,10 @@ try{
         <div class="pbar"><div id="pbar-doc-fill"></div></div>
         <p id="pbar-doc-label" class="muted small">آماده پردازش</p>
         <div class="btn-row">
-          <button class="btn-primary" id="btn-doc-translate" disabled><svg class="ms"><use href="#i-translate"/></svg>ترجمه سند</button>
-          <button class="btn-danger hidden" id="btn-doc-cancel"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
-          <button class="btn-secondary" id="btn-doc-copy" disabled><svg class="ms"><use href="#i-content-copy"/></svg>کپی</button>
-          <button class="btn-secondary" id="btn-doc-download" disabled><svg class="ms"><use href="#i-download"/></svg>دانلود</button>
+          <button class="btn-primary" id="btn-doc-translate" disabled><svg class="ms" width="22" height="22"><use href="#i-translate"/></svg>ترجمه سند</button>
+          <button class="btn-danger hidden" id="btn-doc-cancel"><svg class="ms" width="22" height="22"><use href="#i-stop"/></svg>توقف</button>
+          <button class="btn-secondary" id="btn-doc-copy" disabled><svg class="ms" width="22" height="22"><use href="#i-content-copy"/></svg>کپی</button>
+          <button class="btn-secondary" id="btn-doc-download" disabled><svg class="ms" width="22" height="22"><use href="#i-download"/></svg>دانلود</button>
         </div>
         <div id="doc-out" dir="auto" class="out small-out hidden"></div>
       </div>
@@ -224,9 +224,9 @@ try{
     <div class="card">
       <div class="row col">
         <label class="row-label">زیرنویس سینمایی</label>
-        <div class="dropzone" id="drop-sub"><svg class="ms" style="width:30px;height:30px"><use href="#i-subtitles"/></svg><p>.srt .vtt .ass .ssa .sub را رها کنید یا انتخاب کنید</p></div>
+        <div class="dropzone" id="drop-sub"><svg class="ms" width="30" height="30"><use href="#i-subtitles"/></svg><p>.srt .vtt .ass .ssa .sub را رها کنید یا انتخاب کنید</p></div>
         <input type="file" id="file-sub" accept=".srt,.vtt,.ass,.ssa,.sub" class="hidden">
-        <div id="sub-info" class="fileinfo hidden"><svg class="ms"><use href="#i-movie"/></svg><div><b id="sub-name"></b><span id="sub-meta" class="muted small"></span></div></div>
+        <div id="sub-info" class="fileinfo hidden"><svg class="ms" width="22" height="22"><use href="#i-movie"/></svg><div><b id="sub-name"></b><span id="sub-meta" class="muted small"></span></div></div>
         <p id="sub-status" class="muted small"></p>
       </div>
     </div>
@@ -235,10 +235,10 @@ try{
         <div class="pbar"><div id="pbar-sub-fill"></div></div>
         <p id="pbar-sub-label" class="muted small">آماده</p>
         <div class="btn-row">
-          <button class="btn-primary" id="btn-sub-translate" disabled><svg class="ms"><use href="#i-translate"/></svg>ترجمه دیالوگ‌ها</button>
-          <button class="btn-danger hidden" id="btn-sub-cancel"><svg class="ms"><use href="#i-stop"/></svg>توقف</button>
-          <button class="btn-secondary hidden" id="btn-sub-retry"><svg class="ms"><use href="#i-refresh"/></svg>ترجمه موارد ناقص</button>
-          <button class="btn-secondary" id="btn-sub-download" disabled><svg class="ms"><use href="#i-download"/></svg>دانلود SRT</button>
+          <button class="btn-primary" id="btn-sub-translate" disabled><svg class="ms" width="22" height="22"><use href="#i-translate"/></svg>ترجمه دیالوگ‌ها</button>
+          <button class="btn-danger hidden" id="btn-sub-cancel"><svg class="ms" width="22" height="22"><use href="#i-stop"/></svg>توقف</button>
+          <button class="btn-secondary hidden" id="btn-sub-retry"><svg class="ms" width="22" height="22"><use href="#i-refresh"/></svg>ترجمه موارد ناقص</button>
+          <button class="btn-secondary" id="btn-sub-download" disabled><svg class="ms" width="22" height="22"><use href="#i-download"/></svg>دانلود SRT</button>
         </div>
       </div>
     </div>
@@ -262,12 +262,12 @@ try{
         <label class="row-label">استخر کلیدهای Gemini API</label>
         <textarea id="keys-input" rows="3" dir="ltr" placeholder="کلیدها را هر کدام در یک خط وارد کنید (AIza…)"></textarea>
         <div class="btn-row">
-          <button class="btn-secondary" id="btn-keys-add"><svg class="ms"><use href="#i-add"/></svg>افزودن به استخر</button>
+          <button class="btn-secondary" id="btn-keys-add"><svg class="ms" width="22" height="22"><use href="#i-add"/></svg>افزودن به استخر</button>
           <span id="key-stats" class="muted small">هیچ کلیدی ثبت نشده</span>
         </div>
         <div id="key-list" class="key-list"></div>
         <div class="btn-row">
-          <button class="btn-secondary" id="btn-models-refresh"><svg class="ms"><use href="#i-refresh"/></svg>استعلام زنده مدل‌ها</button>
+          <button class="btn-secondary" id="btn-models-refresh"><svg class="ms" width="22" height="22"><use href="#i-refresh"/></svg>استعلام زنده مدل‌ها</button>
           <span class="chip" id="model-name">—</span>
         </div>
         <p class="hint">کلیدها فقط در حافظه محلی مرورگر خودتان ذخیره می‌شوند. کلید رایگان را از Google AI Studio بگیرید.</p>
@@ -277,12 +277,12 @@ try{
       <div class="row col">
         <label class="row-label">نمایش و تم</label>
         <div class="seg" id="seg-theme">
-          <button data-theme-choice="system" class="on"><svg class="ms small"><use href="#i-system"/></svg>سیستم</button>
-          <button data-theme-choice="light"><svg class="ms small"><use href="#i-light-mode"/></svg>روشن</button>
-          <button data-theme-choice="dark"><svg class="ms small"><use href="#i-dark-mode"/></svg>تاریک</button>
+          <button data-theme-choice="system" class="on"><svg class="ms" width="18" height="18"><use href="#i-system"/></svg>سیستم</button>
+          <button data-theme-choice="light"><svg class="ms" width="18" height="18"><use href="#i-light-mode"/></svg>روشن</button>
+          <button data-theme-choice="dark"><svg class="ms" width="18" height="18"><use href="#i-dark-mode"/></svg>تاریک</button>
         </div>
         <div class="slider-row">
-          <svg class="ms"><use href="#i-format-size"/></svg>
+          <svg class="ms" width="22" height="22"><use href="#i-format-size"/></svg>
           <input type="range" id="font-range" min="85" max="130" step="5" value="100" aria-label="مقیاس فونت">
           <b id="font-val">۱۰۰٪</b>
         </div>
@@ -293,12 +293,12 @@ try{
           <button data-conc="5">سریع (۵)</button>
         </div>
         <label class="tile as-label">
-          <span class="ibox"><svg class="ms"><use href="#i-graphic-eq"/></svg></span>
+          <span class="ibox"><svg class="ms" width="22" height="22"><use href="#i-graphic-eq"/></svg></span>
           <span class="tt"><b>ارسال خودکار پس از گفتار</b><span>با پایان جمله، ترجمه خودکار آغاز شود</span></span>
           <span class="switch"><input type="checkbox" id="sw-autosend" checked><span class="track"></span><span class="thumb"></span></span>
         </label>
         <label class="tile as-label">
-          <span class="ibox"><svg class="ms"><use href="#i-volume-up"/></svg></span>
+          <span class="ibox"><svg class="ms" width="22" height="22"><use href="#i-volume-up"/></svg></span>
           <span class="tt"><b>پخش خودکار صدای ترجمه</b><span>پس از هر ترجمه، نتیجه خوانده شود</span></span>
           <span class="switch"><input type="checkbox" id="sw-autospeak"><span class="track"></span><span class="thumb"></span></span>
         </label>
@@ -308,17 +308,17 @@ try{
       <div class="row col">
         <label class="row-label">داده‌ها و عیب‌یابی صوتی</label>
         <button class="tile" id="btn-clear-cache">
-          <span class="ibox"><svg class="ms"><use href="#i-delete"/></svg></span>
+          <span class="ibox"><svg class="ms" width="22" height="22"><use href="#i-delete"/></svg></span>
           <span class="tt"><b>پاک‌سازی کش ترجمه‌ها</b><span id="cache-size">—</span></span>
           <span class="chev">‹</span>
         </button>
         <button class="tile" id="btn-tts-test">
-          <span class="ibox"><svg class="ms"><use href="#i-volume-up"/></svg></span>
+          <span class="ibox"><svg class="ms" width="22" height="22"><use href="#i-volume-up"/></svg></span>
           <span class="tt"><b>آزمایش بلندگو (TTS)</b><span id="tts-info">بررسی بسته‌های صوتی دستگاه</span></span>
           <span class="chev">‹</span>
         </button>
         <button class="tile" id="btn-mic-test">
-          <span class="ibox"><svg class="ms"><use href="#i-mic"/></svg></span>
+          <span class="ibox"><svg class="ms" width="22" height="22"><use href="#i-mic"/></svg></span>
           <span class="tt"><b>آزمایش میکروفن</b><span>سنجش ۴ ثانیه‌ای سطح سیگنال ورودی</span></span>
           <span class="chev">‹</span>
         </button>
@@ -326,7 +326,7 @@ try{
     </div>
     <div class="card">
       <div class="row col about">
-        <b>ترجمان (Tarjoman) — نسخه ۱.۳.۱</b>
+        <b>ترجمان (Tarjoman) — نسخه ۱.۴.۰</b>
         <p class="muted small">وب‌اپلیکیشن ترجمه چندرسانه‌ای، کاملاً کلاینت‌محور با موتور Gemini. ساخته شده با AI — ایده‌ی Ali Rezaei.</p>
       </div>
     </div>
@@ -338,17 +338,17 @@ try{
 <div id="audio-island" role="status">
   <canvas id="island-canvas" width="220" height="52"></canvas>
   <span id="island-status">میکروفن آماده</span>
-  <button id="island-mic" title="شنود پیوسته"><svg class="ms"><use href="#i-mic"/></svg></button>
+  <button id="island-mic" title="شنود پیوسته"><svg class="ms" width="22" height="22"><use href="#i-mic"/></svg></button>
 </div>
 
 <!-- نوار ناوبری -->
 <nav id="bottom-nav">
   <span id="nav-pill"></span>
-  <button data-tab="panel-text" class="on"><svg class="ms"><use href="#i-text-fields"/></svg><span>متن</span></button>
-  <button data-tab="panel-camera"><svg class="ms"><use href="#i-photo-camera"/></svg><span>دوربین</span></button>
-  <button data-tab="panel-docs"><svg class="ms"><use href="#i-description"/></svg><span>اسناد</span></button>
-  <button data-tab="panel-subs"><svg class="ms"><use href="#i-subtitles"/></svg><span>زیرنویس</span></button>
-  <button data-tab="panel-settings"><svg class="ms"><use href="#i-settings"/></svg><span>تنظیمات</span></button>
+  <button data-tab="panel-text" class="on"><svg class="ms" width="22" height="22"><use href="#i-text-fields"/></svg><span>متن</span></button>
+  <button data-tab="panel-camera"><svg class="ms" width="22" height="22"><use href="#i-photo-camera"/></svg><span>دوربین</span></button>
+  <button data-tab="panel-docs"><svg class="ms" width="22" height="22"><use href="#i-description"/></svg><span>اسناد</span></button>
+  <button data-tab="panel-subs"><svg class="ms" width="22" height="22"><use href="#i-subtitles"/></svg><span>زیرنویس</span></button>
+  <button data-tab="panel-settings"><svg class="ms" width="22" height="22"><use href="#i-settings"/></svg><span>تنظیمات</span></button>
 </nav>
 
 <div id="toasts" aria-live="polite"></div>

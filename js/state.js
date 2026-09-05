@@ -1,4 +1,3 @@
-/* ═══════════ ترجمان — مخزن وضعیت متمرکز + رویدادها + کش محلی ═══════════ */
 import { DEFAULTS, PERSIST_KEYS } from './config.js';
 
 const LS_PREFIX = 'tarjoman:';
@@ -12,7 +11,7 @@ function loadPersisted(){
     try {
       const raw = localStorage.getItem(LS_PREFIX + k);
       if (raw != null) state[k] = JSON.parse(raw);
-    } catch (e) { /* داده خراب → مقدار پیش‌فرض می‌ماند */ }
+    } catch (e) { /* داده خراب → پیش‌فرض */ }
   }
 }
 loadPersisted();
@@ -33,7 +32,7 @@ export function emit(ev, data){
 
 function persist(k){
   if (!PERSIST_KEYS.includes(k)) return;
-  try { localStorage.setItem(LS_PREFIX + k, JSON.stringify(state[k])); } catch (e) { /* سهمیه پر است */ }
+  try { localStorage.setItem(LS_PREFIX + k, JSON.stringify(state[k])); } catch (e) {}
 }
 
 export function setSetting(k, v){ state[k] = v; persist(k); emit('change', { key: k, value: v }); }
@@ -107,7 +106,7 @@ export function cacheSet(k, v){
       for (const old of keys.slice(0, keys.length - 160)) delete cache[old];
     }
     localStorage.setItem(CACHE_KEY, JSON.stringify(cache));
-  } catch (e) { /* سهمیه پر شد → کش اختیاری است */ }
+  } catch (e) {}
 }
 
 export function cacheSize(){

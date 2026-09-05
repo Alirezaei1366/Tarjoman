@@ -1,4 +1,3 @@
-/* ═══════════ ترجمان — سرویس Gemini: چرخش کلید 429، تنزل مدل 404، استریم SSE ═══════════ */
 import { get, setRuntime, nextKey, coolKey, failKey } from '../state.js';
 import { sleep } from '../utils.js';
 
@@ -54,7 +53,7 @@ export async function refreshModels(force = false){
         setRuntime('modelCursor', 0);
         return ranked;
       }
-    } catch (e) { /* خطای شبکه → کلید بعدی */ }
+    } catch (e) { /* شبکه → کلید بعدی */ }
   }
   throw new Error('استعلام مدل‌ها ناموفق بود؛ اعتبار کلید یا اتصال اینترنت را بررسی کنید.');
 }

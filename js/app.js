@@ -1,4 +1,3 @@
-/* ═══════════ ترجمان — کنترلر مرکزی: ناوبری، تب‌ها، هپتیک، پنل‌ها ═══════════ */
 import { LANGS, langByCode, tonePrompt, SUB_SYSTEM, OCR_PROMPT, DOC_PROMPT, TONE_WORDS, DEFAULTS } from './config.js';
 import * as state from './state.js';
 import { haptic, downloadFile, hashStr, fmtBytes, maskKey, toFa, sleep } from './utils.js';
@@ -8,7 +7,7 @@ import * as docs from './services/document.js';
 
 const $  = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
-const icon = name => '<svg class="ms"><use href="#i-' + name + '"/></svg>';
+const icon = name => '<svg class="ms" width="22" height="22"><use href="#i-' + name + '"/></svg>';
 
 const worker = new Worker('./js/workers/processor.worker.js');
 let wSeq = 0;
