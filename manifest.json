@@ -1,0 +1,19 @@
+{
+  "name": "ترجمان — دستیار هوشمند ترجمه",
+  "short_name": "ترجمان",
+  "description": "ترجمه متن، گفتار، تصویر، سند و زیرنویس با هوش مصنوعی Gemini؛ کاملاً کلاینت‌محور و بدون سرور.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "lang": "fa",
+  "dir": "rtl",
+  "background_color": "#f8faf4",
+  "theme_color": "#2d6930",
+  "categories": ["productivity", "utilities"],
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "maskable" }
+  ]
+}

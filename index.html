@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#2d6930">
+<meta name="description" content="ترجمان — دستیار هوشمند ترجمه متن، گفتار، تصویر، سند و زیرنویس؛ کاملاً کلاینت‌محور.">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ترجمان | Tarjoman</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="./icon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,300..700,0..1,0&display=block" rel="stylesheet">
+<link rel="stylesheet" href="./css/styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <img src="./icon.svg" alt="ترجمان" width="42" height="42">
+  <div>
+    <h1>ترجمان</h1>
+    <p>دستیار هوشمند ترجمه — همه‌چیز روی دستگاه شما</p>
+  </div>
+</header>
+
+<main id="app">
+
+  <!-- ══════════ تب ۱: متن و گفتار ══════════ -->
+  <section class="panel active" id="panel-text">
+    <div class="card">
+      <div class="row langs">
+        <select id="sel-source" class="select" aria-label="زبان مبدأ"></select>
+        <button class="icon-btn" id="btn-swap" title="جابه‌جایی زبان‌ها و متن"><span class="ms">swap_horiz</span></button>
+        <select id="sel-target" class="select" aria-label="زبان مقصد"></select>
+      </div>
+      <div class="row editor">
+        <textarea id="src-input" dir="auto" placeholder="متن را بنویسید، بچسبانید یا با میکروفن بگویید… (Ctrl+Enter = ترجمه)" spellcheck="false"></textarea>
+        <div id="ghost-wrap" class="hidden"><span class="ms small">graphic_eq</span><span id="ghost-line"></span></div>
+        <div class="editor-divider"></div>
+        <div id="out-text" dir="auto" class="out"><span class="placeholder">ترجمه اینجا ظاهر می‌شود…</span></div>
+      </div>
+      <div class="row toolbar">
+        <span id="char-count" class="muted small">۰ نویسه</span>
+        <span class="spacer"></span>
+        <button class="icon-btn" id="btn-clear" title="پاک‌سازی"><span class="ms">delete</span></button>
+        <button class="icon-btn" id="btn-copy" title="کپی ترجمه"><span class="ms">content_copy</span></button>
+        <button class="icon-btn" id="btn-speak" title="پخش/توقف صدا"><span class="ms">volume_up</span></button>
+        <button class="btn-primary" id="btn-translate"><span class="ms">translate</span>ترجمه</button>
+        <button class="btn-danger hidden" id="btn-stop-text"><span class="ms">stop</span>توقف</button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">لحن ترجمه</label>
+        <div class="seg" id="seg-tone">
+          <button data-tone="fluent" class="on">روان</button>
+          <button data-tone="street">خودمونی</button>
+          <button data-tone="formal">رسمی</button>
+          <button data-tone="literary">ادبی</button>
+        </div>
+        <p class="hint">با دکمه میکروفن در جزیره صوتی پایین صفحه، شنود پیوسته با ارسال خودکار فعال می‌شود. با ترک این تب، میکروفن خودکار خاموش می‌شود.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ تب ۲: دوربین و OCR ══════════ -->
+  <section class="panel" id="panel-camera">
+    <div class="card">
+      <div class="row col">
+        <div class="cam-view off" id="cam-view">
+          <video id="cam-video" playsinline muted></video>
+          <div class="cam-placeholder"><span class="ms">photo_camera</span><p>دوربین خاموش است</p></div>
+          <div class="scan-frame"><i></i><i></i><i></i><i></i><b class="scanline"></b></div>
+        </div>
+        <div class="btn-row">
+          <button class="btn-secondary" id="btn-cam"><span class="ms">videocam</span>روشن کردن دوربین</button>
+          <button class="btn-primary" id="btn-shot" disabled><span class="ms">camera</span>ثبت و ترجمه</button>
+        </div>
+        <canvas id="cam-canvas" class="hidden"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">آپلود تصویر</label>
+        <div class="dropzone" id="drop-cam"><span class="ms">upload_file</span><p>فایل JPG / PNG / WebP را اینجا رها کنید، بزنید، یا با Ctrl+V بچسبانید</p></div>
+        <input type="file" id="file-cam" accept=".jpg,.jpeg,.png,.webp,image/*" class="hidden">
+        <img id="img-preview" class="hidden" alt="پیش‌نمایش تصویر">
+        <div class="btn-row end"><button class="btn-secondary hidden" id="btn-img-clear"><span class="ms">delete</span>حذف تصویر</button></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">نتیجه OCR و ترجمه</label>
+        <p id="ocr-status" class="muted small"></p>
+        <div class="out-box"><span class="box-title">متن شناسایی‌شده</span><div id="ocr-raw" dir="auto" class="out small-out">—</div></div>
+        <div class="out-box accent"><span class="box-title">ترجمه</span><div id="ocr-out" dir="auto" class="out small-out">—</div></div>
+        <div class="btn-row end">
+          <button class="btn-secondary hidden" id="btn-ocr-copy"><span class="ms">content_copy</span>کپی ترجمه</button>
+          <button class="btn-danger hidden" id="btn-stop-cam"><span class="ms">stop</span>توقف</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ تب ۳: اسناد ══════════ -->
+  <section class="panel" id="panel-docs">
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">اسناد متنی، PDF و Word</label>
+        <div class="dropzone" id="drop-doc"><span class="ms">description</span><p>.pdf .docx .txt .md .csv را رها کنید یا انتخاب کنید</p></div>
+        <input type="file" id="file-doc" accept=".pdf,.docx,.txt,.md,.csv" class="hidden">
+        <div id="doc-info" class="fileinfo hidden"><span class="ms">insert_drive_file</span><div><b id="doc-name"></b><span id="doc-meta" class="muted small"></span></div></div>
+        <p id="doc-status" class="muted small"></p>
+        <div id="doc-preview" dir="auto" class="out small-out dim hidden"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <div class="pbar"><div id="pbar-doc-fill"></div></div>
+        <p id="pbar-doc-label" class="muted small">آماده پردازش</p>
+        <div class="btn-row">
+          <button class="btn-primary" id="btn-doc-translate" disabled><span class="ms">translate</span>ترجمه سند</button>
+          <button class="btn-danger hidden" id="btn-doc-cancel"><span class="ms">stop</span>توقف</button>
+          <button class="btn-secondary" id="btn-doc-copy" disabled><span class="ms">content_copy</span>کپی</button>
+          <button class="btn-secondary" id="btn-doc-download" disabled><span class="ms">download</span>دانلود</button>
+        </div>
+        <div id="doc-out" dir="auto" class="out small-out hidden"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ تب ۴: زیرنویس ══════════ -->
+  <section class="panel" id="panel-subs">
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">زیرنویس سینمایی</label>
+        <div class="dropzone" id="drop-sub"><span class="ms">subtitles</span><p>.srt .vtt .ass .ssa .sub را رها کنید یا انتخاب کنید</p></div>
+        <input type="file" id="file-sub" accept=".srt,.vtt,.ass,.ssa,.sub" class="hidden">
+        <div id="sub-info" class="fileinfo hidden"><span class="ms">movie</span><div><b id="sub-name"></b><span id="sub-meta" class="muted small"></span></div></div>
+        <p id="sub-status" class="muted small"></p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <div class="pbar"><div id="pbar-sub-fill"></div></div>
+        <p id="pbar-sub-label" class="muted small">آماده</p>
+        <div class="btn-row">
+          <button class="btn-primary" id="btn-sub-translate" disabled><span class="ms">translate</span>ترجمه دیالوگ‌ها</button>
+          <button class="btn-danger hidden" id="btn-sub-cancel"><span class="ms">stop</span>توقف</button>
+          <button class="btn-secondary hidden" id="btn-sub-retry"><span class="ms">refresh</span>ترجمه موارد ناقص</button>
+          <button class="btn-secondary" id="btn-sub-download" disabled><span class="ms">download</span>دانلود SRT</button>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">ویرایشگر دیالوگ (قابل ویرایش درجا)</label>
+        <div class="sub-scroll">
+          <div class="sub-grid">
+            <div class="sub-head"><span>#</span><span>زمان</span><span>متن اصلی</span><span>ترجمه</span></div>
+            <div id="sub-rows"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ تب ۵: تنظیمات ══════════ -->
+  <section class="panel" id="panel-settings">
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">استخر کلیدهای Gemini API</label>
+        <textarea id="keys-input" rows="3" dir="ltr" placeholder="کلیدها را هر کدام در یک خط وارد کنید (AIza…)"></textarea>
+        <div class="btn-row">
+          <button class="btn-secondary" id="btn-keys-add"><span class="ms">add</span>افزودن به استخر</button>
+          <span id="key-stats" class="muted small">هیچ کلیدی ثبت نشده</span>
+        </div>
+        <div id="key-list" class="key-list"></div>
+        <div class="btn-row">
+          <button class="btn-secondary" id="btn-models-refresh"><span class="ms">refresh</span>استعلام زنده مدل‌ها</button>
+          <span class="chip" id="model-name">—</span>
+        </div>
+        <p class="hint">کلیدها فقط در حافظه محلی مرورگر خودتان ذخیره می‌شوند. کلید رایگان را از Google AI Studio بگیرید.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">نمایش و تم</label>
+        <div class="seg" id="seg-theme">
+          <button data-theme-choice="system" class="on"><span class="ms small">brightness_auto</span>سیستم</button>
+          <button data-theme-choice="light"><span class="ms small">light_mode</span>روشن</button>
+          <button data-theme-choice="dark"><span class="ms small">dark_mode</span>تاریک</button>
+        </div>
+        <div class="slider-row">
+          <span class="ms">format_size</span>
+          <input type="range" id="font-range" min="85" max="130" step="5" value="100" aria-label="مقیاس فونت">
+          <b id="font-val">۱۰۰٪</b>
+        </div>
+        <label class="row-label">سرعت پردازش دسته‌ای (اسناد)</label>
+        <div class="seg" id="seg-conc">
+          <button data-conc="1">آرام (۱)</button>
+          <button data-conc="3">متعادل (۳)</button>
+          <button data-conc="5">سریع (۵)</button>
+        </div>
+        <label class="tile as-label">
+          <span class="ibox"><span class="ms">graphic_eq</span></span>
+          <span class="tt"><b>ارسال خودکار پس از گفتار</b><span>با پایان جمله، ترجمه خودکار آغاز شود</span></span>
+          <span class="switch"><input type="checkbox" id="sw-autosend" checked><span class="track"></span><span class="thumb"></span></span>
+        </label>
+        <label class="tile as-label">
+          <span class="ibox"><span class="ms">volume_up</span></span>
+          <span class="tt"><b>پخش خودکار صدای ترجمه</b><span>پس از هر ترجمه، نتیجه خوانده شود</span></span>
+          <span class="switch"><input type="checkbox" id="sw-autospeak"><span class="track"></span><span class="thumb"></span></span>
+        </label>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col">
+        <label class="row-label">داده‌ها و عیب‌یابی صوتی</label>
+        <button class="tile" id="btn-clear-cache">
+          <span class="ibox"><span class="ms">cleaning_services</span></span>
+          <span class="tt"><b>پاک‌سازی کش ترجمه‌ها</b><span id="cache-size">—</span></span>
+          <span class="chev">‹</span>
+        </button>
+        <button class="tile" id="btn-tts-test">
+          <span class="ibox"><span class="ms">speaker</span></span>
+          <span class="tt"><b>آزمایش بلندگو (TTS)</b><span id="tts-info">بررسی بسته‌های صوتی دستگاه</span></span>
+          <span class="chev">‹</span>
+        </button>
+        <button class="tile" id="btn-mic-test">
+          <span class="ibox"><span class="ms">mic</span></span>
+          <span class="tt"><b>آزمایش میکروفن</b><span>سنجش ۴ ثانیه‌ای سطح سیگنال ورودی</span></span>
+          <span class="chev">‹</span>
+        </button>
+      </div>
+    </div>
+    <div class="card">
+      <div class="row col about">
+        <b>ترجمان (Tarjoman) — نسخه ۱.۱.۰</b>
+        <p class="muted small">وب‌اپلیکیشن ترجمه چندرسانه‌ای، کاملاً کلاینت‌محور با موتور Gemini. هیچ سروری در میانه نیست؛ کلیدها و داده‌های شما فقط در مرورگر خودتان می‌مانند.</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- جزیره صوتی شناور -->
+<div id="audio-island" role="status">
+  <canvas id="island-canvas" width="220" height="52"></canvas>
+  <span id="island-status">میکروفن آماده</span>
+  <button id="island-mic" title="شنود پیوسته"><span class="ms">mic</span></button>
+</div>
+
+<!-- نوار ناوبری -->
+<nav id="bottom-nav">
+  <span id="nav-pill"></span>
+  <button data-tab="panel-text" class="on"><span class="ms">text_fields</span><span>متن</span></button>
+  <button data-tab="panel-camera"><span class="ms">photo_camera</span><span>دوربین</span></button>
+  <button data-tab="panel-docs"><span class="ms">description</span><span>اسناد</span></button>
+  <button data-tab="panel-subs"><span class="ms">subtitles</span><span>زیرنویس</span></button>
+  <button data-tab="panel-settings"><span class="ms">settings</span><span>تنظیمات</span></button>
+</nav>
+
+<div id="toasts" aria-live="polite"></div>
+
+<!-- شیت تأیید -->
+<div id="sheet" class="hidden" role="dialog" aria-modal="true">
+  <div class="sheet-card">
+    <b id="sheet-title"></b>
+    <p id="sheet-msg"></p>
+    <div class="btn-row end">
+      <button class="btn-secondary" id="sheet-cancel">انصراف</button>
+      <button class="btn-danger" id="sheet-ok">تأیید</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/app.js"></script></body>
+</html>
